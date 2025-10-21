@@ -1,0 +1,18 @@
+.header {
+  background-color: #3e6432;
+  color: #f4eedf;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+
+.logo {
+  height: 50px;
+  width: auto;
+}
