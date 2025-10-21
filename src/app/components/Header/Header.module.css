@@ -1,18 +1,29 @@
 .header {
   background-color: #3e6432;
   color: #f4eedf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 20px;
-  text-align: center;
   border-radius: 10px;
+  position: relative;
 }
 
 .logoContainer {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #f5efe3;
   display: flex;
   align-items: center;
-  margin-right: 0.5rem;
+  justify-content: center;
+  overflow: hidden;
+  position: absolute;
+  left: 20px;
 }
 
-.logo {
-  height: 50px;
-  width: auto;
+.logoContainer img {
+  width: 80%;
+  height: auto;
+  object-fit: contain;
 }
