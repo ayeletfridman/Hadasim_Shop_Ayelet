@@ -1,43 +1,46 @@
+"use client";
+import React, { useEffect, useState } from "react";
 import Card from "./components/Card/Card";
 
+interface Product {
+  _id: string;
+  title: string;
+  desc: string;
+  price: number;
+  img: string;
+  inv: {
+    haifa: string;
+    tlv: string;
+    eilat: string;
+  };
+}
+
 export default function Home() {
-  const products = [
-    {
-      title: "נעליים",
-      imageUrl:
-        "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2hvZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=600",
-      description: "נעליים נוחות וקלות לעבודה וליום יום",
-      price: 199.9,
-    },
-    {
-      title: "חולצה",
-      imageUrl:
-        "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2hpcnR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=600",
-      description: "עשויה 100% כותנה איכותית ונושמת",
-      price: 89.9,
-    },
-    {
-      title: "כובע",
-      imageUrl:
-        "https://plus.unsplash.com/premium_photo-1680859126205-1c593bb4f9e8?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aGF0c3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=600",
-      description: "הגנה מושלמת מקרני השמש בים ובטיולים",
-      price: 49.9,
-    },
-  ];
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    fetch("/api/products")
+      .then(async (res) => {
+        const text = await res.text();
+        try {
+          const data = text ? JSON.parse(text) : [];
+          setProducts(data);
+        } catch (err) {
+          console.error("Failed to parse JSON:", text, err);
+          setProducts([]);
+        }
+      })
+      .catch((err) => console.error("Error loading products:", err));
+  }, []);
+
   return (
-    <div
-      style={{
-        display: "grid",
-        gap: "20px",
-        gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-      }}
-    >
-      {products.map((p, i) => (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+      {products.map((p) => (
         <Card
-          key={i}
-          image={p.imageUrl}
+          key={p._id}
+          image={p.img}
           title={p.title}
-          description={p.description}
+          description={p.desc}
           price={p.price}
         />
       ))}
